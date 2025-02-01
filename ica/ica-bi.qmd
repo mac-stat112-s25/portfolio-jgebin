@@ -1,5 +1,78 @@
 ---
 title: "Bivariate Viz"
+number-sections: true
+execute: 
+  warning: false
+fig-height: 2.75
+fig-width: 4.25
+fig-env: 'figure'
+fig-pos: 'h'
+fig-align: center
+code-fold: false
 ---
 
-Use this file for practice with the **bivariate viz** in-class activity.  Refer to the class website for details.
+## Review
+
+```{r}
+# Import data
+survey <- read.csv("https://ajohns24.github.io/data/112/about_us_2024.csv")
+```
+# How many students have now filled out the survey?
+28 students have filled out the survey
+
+# What type of variables do we have?
+The variables in the survey are cafe_mac, minutes_to_campus, fave_temp, and hangout
+
+### EXAMPLE 1: Hangout Preferences {-}
+
+```{r}
+# Attach a package needed to use the ggplot functions
+library(tidyverse)
+```
+
+# Make a ggplot
+```{r}
+ggplot(survey,aes(x=hangout)) + geom_bar(color = "white") + labs(x="hangout", y = "number of students")
+```
+
+### EXAMPLE 2: Temperature Preferences {-}
+
+Students were asked about their ideal outdoor temperature, in degrees Celsius. How did they answer? What was the typical response? What was the range in responses? Were there any outliers? Build and interpret 2 plots that help address these questions.
+
+```{r}
+ggplot(survey, aes(x=fave_temp)) + geom_histogram(color = "white",binwidth = 5) + labs(x="Favorite Temp", y = "Number of students")
+```
+
+```{r}
+ggplot(survey, aes(x = fave_temp)) + geom_bar(color = "blue", fill = "blue") + labs(x = "Favorite Temperature", y = "Count")
+```
+
+#### EXAMPLE 3 {-}
+  a.  3pm temperature (response) vs 9am temperature (predictor)
+```{r}
+data.frame(temp_3pm = c(24, 26, 20, 15, 15, 15), temp_9am = c(14, 18, 15, 13, 11, 11))
+```
+  b.  3pm temperature (response) vs location (predictor)
+```{r}
+weather <- data.frame(temp_3pm = c(24, 26, 20, 15, 15, 0, 40, 60, 57, 44, 51, 75),
+                      location = rep(c("A", "B"), each = 6))
+weather
+```
+
+```{r}
+ggplot(weather, aes(x = temp_3pm)) +
+      geom_density()
+```
+
+c.  `rain_today` (the response) and `location` (the predictor)
+```{r}
+weather <- data.frame(rain_today = c("no", "no", "no", "no", "yes", "no", "yes", "no", "yes", "yes", "no", "yes"),
+                        location = c(rep("A", 7), rep("B", 5)))
+    weather
+```
+How might we modify the below bar plot of location to distinguish between days on which it did or didn’t rain?
+```{r}
+ggplot(weather, aes(x = location)) +
+      geom_bar()
+```
+
