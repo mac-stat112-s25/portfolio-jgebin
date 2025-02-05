@@ -3,3 +3,106 @@ title: "Mulivariate Viz"
 ---
 
 Use this file for practice with the **mulivariate viz** in-class activity.  Refer to the class website for details.
+
+# 5.1 Notes
+```{r}
+library(tidyverse)
+
+# Import data
+weather <- read.csv("https://mac-stat.github.io/data/weather_3_locations.csv") |> 
+  mutate(date = as.Date(date))  
+
+# Check out the first 6 rows
+head(weather)
+```
+# What are the units of observation?
+date, location, mintemp, maxtemp,rainfall, evaporation, sunshine, windgustdir, windgustspeed, winddir9am, winddir3pm, windspeed9am, windspeed3pm, humidity9am, humidity3pm, pressure9am, pressure3pm, cloud9am, cloud3pm, temp9am, temp3pm, raintoday, risk_mm,raintomorrow
+
+# How many data points do we have? 
+
+
+# What type of variables do we have?
+
+
+
+# In-Class Activities - Exercises
+```{r}
+# Import and check out data
+education <- read.csv("https://mac-stat.github.io/data/sat.csv")
+head(education)
+
+#library
+library(tidyverse)
+```
+
+## Exercise 1: SAT scores
+### Part a
+```{r}
+ggplot(education, aes(x=sat)) + geom_density() 
+```
+### Part b
+The sat scores are slightly left-skewed and bi-model. I don't know why. SAT scores range from 840 to 1110. Typical outcomes are 900 and 1040. 
+
+## Exercise 2: SAT Scores vs Per Pupil Spending & SAT Scores vs Salaries
+### Part a
+```{r}
+# Construct a plot of sat vs expend
+# Include a "best fit linear regression model" (HINT: method = "lm")
+ggplot(education, aes(x = expend, y = sat)) + geom_point() + geom_smooth(method = lm)
+
+```
+```{r}
+# Construct a plot of sat vs salary
+# Include a "best fit linear regression model" (HINT: method = "lm")
+ggplot(education, aes(x = salary, y = sat)) + geom_point() + geom_smooth(method = lm)
+```
+
+### Part b
+What are the relationship trends between SAT scores and spending? Is there anything that surprises you?
+
+- I'm surprised that the average SAT scores goes down with salary and expenditure. That doesn't really make sense to me.
+
+## Exercise 3: SAT Scores vs Per Pupil Spending and Teacher Salaries
+```{r}
+ggplot(education, aes(x = expend, y = sat)) + geom_point() + facet_wrap (~sat)
+```
+```{r}
+ggplot(education, aes(x = salary, y = sat, color = expend)) + geom_point() 
+```
+```{r}
+ggplot(education, aes(x = expend, y = sat, color = salary)) + geom_point() 
+```
+
+## Exercise 4: Another way to incoporate scale
+```{r}
+ggplot(education, aes(y = sat, x = salary, color = cut(expend, 3))) + 
+  geom_point() + 
+  geom_smooth(se = FALSE, method = "lm")
+```
+Describe the trivariate relationship between sat, salary, and expend.
+
+- As SAT scores decrease, salary increases. However as expenditure decreaeses, SAT scores decrease. 
+
+## Exercise 5: Finally an Explanation
+
+### Part a
+```{r}
+ggplot(education, aes(x = fracCat)) + geom_bar()
+```
+
+### Part b 
+
+```{r}
+ggplot(education, aes(x = sat, fill = fracCat)) + geom_histogram()
+```
+```{r}
+ggplot(education, aes(x = sat, fill= fracCat)) + geom_density()
+```
+
+### Part c
+```{r}
+ggplot(education, aes(x = sat, y = expend, color = fracCat)) + geom_point() + geom_smooth(method = lm)
+```
+
+### Part d
+It appears that SAT scores decrease with higher expenditure because the expenditure is actually higher proportionately to the amount of students that actually take the SAT. 
