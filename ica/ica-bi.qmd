@@ -97,7 +97,7 @@ head(elections)
 ```{r}
 ggplot(elections, aes(x= winner_20, fill = winner_20)) + 
   geom_bar() +
-  scale_fill_manual(values = c("blue", "red"))
+  scale_fill_manual(values = c("blue", "red")) 
 ```
 Follow Up: 
 We know that the Joe Biden won the 2020 Election, so how could we visualize population in the data?
