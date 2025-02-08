@@ -2,9 +2,17 @@
 title: "Spatial Viz"
 ---
 
+
+
+
+
 Use this file for practice with the **spatial viz** in-class activity.  Refer to the class website for details.
 
 ### Exercise 1: A leaflet with markers / points
+
+
+
+
 
 ```{r}
 fave_places <- read.csv("https://hash-mac.github.io/stat112site-s25/data/our_fave_places.csv")
@@ -13,7 +21,15 @@ fave_places <- read.csv("https://hash-mac.github.io/stat112site-s25/data/our_fav
 head(fave_places)
 ```
 
+
+
+
+
 ## Part a
+
+
+
+
 ```{r}
 # Load the leaflet package
 library(leaflet)
@@ -22,6 +38,7 @@ library(tidyverse)
 # Just a plotting frame
 leaflet(data = fave_places)
 ```
+
 ```{r}
 # Now what do we have?
 leaflet(data = fave_places) |> 
@@ -43,7 +60,15 @@ leaflet(data = fave_places) |>
   addTiles() |> 
   addMarkers()
 ```
+
+
+
+
 ### Exercise 2: Details
+
+
+
+
 
 ```{r}
 # Load package needed to change color
@@ -54,6 +79,7 @@ leaflet(data = fave_places) |>
   addTiles() |> 
   addCircles(color = col2hex("red"))
 ```
+
 ```{r}
 # We can change the background
 # Mark locations with yellow dots
@@ -69,7 +95,15 @@ leaflet(data = fave_places) |>
   )
 ```
 
+
+
+
+
 ### Exercise 3: Your turn
+
+
+
+
 
 ```{r}
 # Import starbucks location data
@@ -82,20 +116,44 @@ starbucks_mn <- starbucks |>
   filter(Country == "US", State.Province == "MN")
 ```
 
+
+
+
+
 ## Part 2: Static points on a map
+
+
+
+
 ```{r}
 leaflet(data = starbucks_mn) |> 
   addTiles() |> 
   addMarkers(lng = ~Longitude, lat = ~Latitude)
 ```
 
+
+
+
+
 ### Exercise 3: A simple scatterplot
+
+
+
+
 ```{r}
 ggplot(starbucks, aes(x = Latitude, y = Longitude)) +geom_point(alpha = .2, size = .2)
 ```
 
+
+
+
+
 ### Exercise 4: Adding a country-level background
 ## Part a
+
+
+
+
 ```{r}
 # Load the package
 library(rnaturalearth)
@@ -105,13 +163,22 @@ library(rnaturalearth)
 world_boundaries <- ne_countries(returnclass = "sf")
 ```
 
+
+
+
+
 ## Part b
+
+
+
+
 ```{r}
 # What does this code produce?
 # What geom are we using for the point map?
 ggplot(world_boundaries) + 
   geom_sf()
 ```
+
 ```{r}
 # Load package needed to change map theme
 library(mosaic)
@@ -129,11 +196,19 @@ ggplot(world_boundaries) +
   theme_map()
 ```
 
+
+
+
+
 ## Part c
 Starbucks is most concentrated in North America, Europe, and East Asia.
 
 ### Exercise 5: Zooming in on some countries
 ## Part a
+
+
+
+
 ```{r}
 # We'll learn this syntax soon! Don't worry about it now.
 starbucks_cma <- starbucks |> 
@@ -146,7 +221,15 @@ cma_boundaries <- ne_states(
   returnclass = "sf")
 ```
 
+
+
+
+
 ## Part b
+
+
+
+
 ```{r}
 # Just the boundaries
 ggplot(cma_boundaries) + 
@@ -169,8 +252,16 @@ ggplot(cma_boundaries) +
   theme_map()
 ```
 
+
+
+
+
 ### Exercise 6: A state and county-level map
 ## Part a
+
+
+
+
 ```{r}
 starbucks_midwest <- starbucks |> 
   filter(State.Province %in% c("MN", "ND", "SD", "WI"))
@@ -190,7 +281,15 @@ midwest_boundaries <- st_as_sf(
 # Check it out
 head(midwest_boundaries)
 ```
+
+
+
+
 ## Part b
+
+
+
+
 ```{r}
 ggplot(midwest_boundaries) + 
   geom_sf() + 
@@ -204,7 +303,15 @@ ggplot(midwest_boundaries) +
    theme_map()
 ```
 
+
+
+
+
 ### Exercise 7: Contour maps
+
+
+
+
 
 ```{r}
 # Point map (we made this earlier)
@@ -235,7 +342,15 @@ ggplot(cma_boundaries) +
   coord_sf(xlim = c(-179.14, -50), ylim = c(14.54, 83.11)) +
   theme_map()
 ```
+
+
+
+
 ## Part 3: Choropleth maps
+
+
+
+
 ```{r}
 elections_by_state <-  read.csv("https://mac-stat.github.io/data/election_2020_by_state.csv")
 elections_by_counties <- read.csv("https://mac-stat.github.io/data/election_2020_county.csv")
@@ -265,8 +380,16 @@ elections_by_counties <- elections_by_counties |>
                include.lowest = TRUE))
 ```
 
+
+
+
+
 ### Exercise 8: State-level choropleth maps
 ## Part a
+
+
+
+
 ```{r}
 # Get the latitude and longitude coordinates of state boundaries
 states_map <- map_data("state")
@@ -283,7 +406,15 @@ head(states_map)
 head(elections_by_state) 
 ```
 
+
+
+
+
 ## Part b
+
+
+
+
 ```{r}
 # Note where the dataset, elections_by_state, is used
 # Note where the background map, states_map, is used
@@ -320,7 +451,15 @@ ggplot(elections_by_state, aes(map_id = state_name, fill = repub_20_categories))
   theme_map() + 
   scale_fill_manual(values = rev(brewer.pal(8, "RdBu")), name = "% Republican")
 ```
+
+
+
+
 ## Part c
+
+
+
+
 ```{r}
 # Get only the starbucks data from the US
 starbucks_us <- starbucks |> 
@@ -341,12 +480,20 @@ ggplot(elections_by_state, aes(map_id = state_name, fill = repub_20_categories))
   scale_fill_manual(values = rev(brewer.pal(8, "RdBu")), name = "% Republican")
 ```
 
+
+
+
+
 ## Part d
 We used geom_sf() for point maps. What geom do we use for choropleth maps?
 
 - geom_map
 
 ### Exercise 9: County-level choropleth maps
+
+
+
+
 
 ```{r}
 # Get the latitude and longitude coordinates of county boundaries
@@ -374,7 +521,15 @@ elections_by_counties <- elections_by_counties |>
            ifelse(nchar(county_fips) == 4, paste0("0", county_fips), county_fips))
 ```
 
+
+
+
+
 ## Part b
+
+
+
+
 ```{r}
 ggplot(elections_by_counties, aes(map_id = county_fips, fill = repub_20_categories)) +
   geom_map(map = county_map) +
@@ -384,8 +539,16 @@ ggplot(elections_by_counties, aes(map_id = county_fips, fill = repub_20_categori
   theme(legend.position = "right") + 
   coord_equal()
 ```
+
+
+
+
 ### Exercise 10: Play around!
 Construct county-level maps of median_rent and median_age.
+
+
+
+
 ```{r}
 ggplot(elections_by_counties, aes(map_id = county_fips, fill = median_rent)) +
   geom_map(map = county_map) +
@@ -395,6 +558,7 @@ ggplot(elections_by_counties, aes(map_id = county_fips, fill = median_rent)) +
   coord_equal() +
   scale_fill_gradient(low="#9ac0f5", high= "#0c3a7a")
 ```
+
 ```{r}
 ggplot(elections_by_counties, aes(map_id = county_fips, fill = median_age)) +
   geom_map(map = county_map) +
@@ -404,12 +568,21 @@ ggplot(elections_by_counties, aes(map_id = county_fips, fill = median_age)) +
   coord_equal() +
   scale_fill_gradient(low="#ffcc5e", high= "#94270f")
 ```
+
+
+
+
 ### Exercise 11: Choropleth maps with leaflet
+
+
+
+
 ```{r}
 states <- sf::read_sf("https://rstudio.github.io/leaflet/json/us-states.geojson")
 class(states)
 names(states)
 ```
+
 ```{r}
 # From https://leafletjs.com/examples/choropleth/us-states.js
 states <- sf::read_sf("https://rstudio.github.io/leaflet/json/us-states.geojson")
