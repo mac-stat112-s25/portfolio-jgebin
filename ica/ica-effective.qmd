@@ -1,0 +1,100 @@
+---
+title: "Effective Viz"
+number-sections: true
+execute: 
+  warning: false
+fig-height: 2.75
+fig-width: 4.25
+fig-env: 'figure'
+fig-pos: 'h'
+fig-align: center
+code-fold: false
+---
+
+### Exercise 1: Professionalism
+
+```{r}
+# Load tidyverse package for plotting and wrangling
+library(tidyverse)
+
+# Import the data
+weather <- read.csv("https://mac-stat.github.io/data/weather_3_locations.csv") |> 
+  mutate(date = as.Date(date))
+```
+
+```{r}
+ggplot(weather, aes(y = temp3pm, x = temp9am, color = location)) + 
+  geom_point()
+```
+
+## Part A
+```{r}
+ggplot(weather, aes(y = temp3pm, x = temp9am, color = location)) + 
+  geom_point() + 
+  labs(x = "Temperature - 9am", y = "Temperature - 3pm", title = "Weather in Australian Locations", color = "Location")  
+```
+
+## Part B
+```{r}
+#| fig-cap: "Graph showing relation of temperature at 9am and 3pm at different Australian locations"
+
+ggplot(weather, aes(y = temp3pm, x = temp9am, color = location)) + 
+  geom_point() + 
+  labs(x = "Temperature - 9am", y = "Temperature - 3pm", title = "Weather in Australian Locations", color = "Location") 
+```
+
+### Exercise 2: Accessibility
+
+```{r}
+ggplot(weather, aes(x = temp3pm, fill = location)) + 
+  geom_density(alpha = 0.5) + 
+  labs(x = "3pm temperature (Celsius)") 
+```
+
+## Part a
+```{r}
+#| fig-cap: "Density plots of 3pm temperatures in 3 Australian locations."
+#| fig-alt: "Stacked density graph of Density plots of 3pm temperatures in 3 Australian locations where Wollongong is the hottest on average "
+
+ggplot(weather, aes(x = temp3pm, fill = location)) + 
+  geom_density(alpha = 0.5) + 
+  labs(x = "3pm temperature (Celsius)")  
+```
+
+## Part b 
+When affected by color-blindness it is especially hard to differentiate colors, especially one's color blindness is dichromatic. Therefore, our color choices in vizualizations could impact whether it is or is not legible to people with color blindness
+
+## Part c
+
+```{r}
+ggplot(weather, aes(x = temp3pm, fill = location)) + 
+  geom_density(alpha = 0.5) + 
+  labs(x = "3pm temperature (Celsius)") + 
+  scale_fill_viridis_d()    
+```
+
+```{r}
+# In the color scale line:
+# Change "fill" to "color" since we use color in the aes()
+# Change "d" (discrete) to "c" (continuous) since maxtemp is on a continuous scale
+ggplot(weather, aes(y = temp3pm, x = temp9am, color = maxtemp)) + 
+  geom_point(alpha = 0.5) + 
+  labs(x = "3pm temperature (Celsius)") + 
+  scale_color_viridis_c()
+```
+
+### Exercise 3: Ethics
+## Part a
+This plot is unethical because it is misleading and concludes that average global temperature has not at all increased from 1880 to 2015, which is false.
+
+### Exercise 4: Critique
+I looked at the Impact of Major on Career Path for Williams College Alumni
+
+- What story does the data graphic tell? What is the main message that you take away from it?
+The graphic shows the different career outcomes for Williams College graduates. It aims to show you the diverse paths that alumni have taken
+- Can the data graphic be described in terms of the Grammar of Graphics (frame, glyphs, aesthetics, facet, scale, guide)? If so, please describe.
+I'm honestly not sure.
+- Critique and/or praise the visualization choices made by the designer. Do they work? Are they misleading? Thought-provoking? Are there things that you would have done differently?
+I enjoy the way that the visualization is interactive and you can shift the viz. based off what you are looking for. However, the circular/ wheel shape of the flow chart leads to it being slightly confusing and hard to interpret at times. It is also not very telling of the actual data used to tell it since there are no scales or reference. 
+
+### Exercise 5: Design Details
