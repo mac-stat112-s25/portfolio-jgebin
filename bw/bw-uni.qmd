@@ -3,3 +3,25 @@ title: "Univariate Viz"
 ---
 
 Use this file to generate a professional looking **univariate** visualization. The visualization will not perfect the first time but you are expected to improve on it throughout the semester especially after covering advanced topics such as effective viz.
+
+```{r}
+# Load packages
+library(tidyverse)
+```
+
+```{r}
+# Data on students in this class
+survey <- read.csv("https://hash-mac.github.io/stat112site-s25/data/survey.csv")
+
+# World Cup data
+world_cup <- read.csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-11-29/worldcups.csv")
+```
+
+```{r}
+#| fig-cap: "Histogram showing the amount of times a number of Goals has been scored in a World Cup."
+#| fig-alt: "Histogram showing the amount of times a number of Goals has been scored in a World Cup. Scores range from about 50 to 170. The most common total goals scored in a World Cup has been approximatley 90, occuring 6 times across the data set."
+ggplot(world_cup, aes(x = goals_scored)) + 
+  geom_histogram(color = "white", fill = "#332288", binwidth = 15) + 
+  labs(title = "Total Goals Scored in World Cups", x = "Goals Scored", y = "# of World Cups")
+```
+
