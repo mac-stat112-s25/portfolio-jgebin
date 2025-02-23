@@ -3,3 +3,25 @@ title: "Bivariate Viz"
 ---
 
 Use this file to generate a professional looking **bivariate** visualization.  The visualization will not perfect the first time but you are expected to improve it throughout the semester especially after covering advanced topics such as effective viz.
+```{r}
+# Load data
+elections <- read.csv("https://mac-stat.github.io/data/election_2020_county.csv")
+
+#library
+library(tidyverse)
+```
+
+
+
+```{r}
+#| fig-cap: "Stacked bar chart showing partisan vote counts based on the final election results of 2020."
+#| fig-alt: "Stacked bar chart showing partisan vote counts based on the final election results of 2020. Republicans had a higher average vote count in counties regardless of political lean. More democrats voted on party average in counties that were purple, with no real political lean."
+
+# A stacked bar plot
+# "historical" is the fill color, meaning it shows the visualizes the data by color. "winner_20" is the x-axis so it shows the data represented through the bar plot.
+ggplot(elections, aes(x = historical, fill = winner_20)) +
+  geom_bar() +
+  scale_fill_manual(values = c("#332288","#CC6677")) +
+  labs(title = "Partisan Vote Counts in 2020 Election by Political Affiliation", x = "Partisan Vote", y = "Vote Count", fill = "Political Party")
+```
+
