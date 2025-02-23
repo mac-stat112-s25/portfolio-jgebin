@@ -3,3 +3,23 @@ title: "Trivariate Viz"
 ---
 
 Use this file to generate a professional looking **trivariate** visualization.  The visualization will not perfect the first time but you are expected to improve on it throughout the semester especially after covering advanced topics such as effective viz.
+
+```{r}
+#library
+library(tidyverse)
+```
+
+```{r}
+# Import data
+education <- read.csv("https://mac-stat.github.io/data/sat.csv")
+```
+
+```{r}
+#| fig-cap: "Density plot showing the different ranges SAT scores based on the amount of eligible people taking the SAT."
+#| fig-alt: "Density plot showing the different ranges SAT scores based on the amount of eligible people taking the SAT. The greater the ratio of students Not taking SAT despite beign eligible correlates to lower SAT scores. When all eligible students take the SAT, SAT scores on average are higher."
+ggplot(education, aes(x = sat, fill= fracCat)) + 
+  geom_density(alpha = .8) +
+  scale_fill_manual(values = c("#882255","#44AA99","#88CCEE"))+
+  labs(title = "SAT Scores Based on the Amount of Eligible Students Taking SAT", x = "SAT Score", y = "Density", fill = "Not Taking/ Taking SAT")
+```
+
