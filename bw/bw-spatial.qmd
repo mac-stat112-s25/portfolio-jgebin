@@ -3,3 +3,37 @@ title: "Spatial Viz"
 ---
 
 Use this file to generate a professional looking **spatial** visualization.  The visualization will not perfect the first time but you are expected to improve on it throughout the semester especially after covering advanced topics such as effective viz.
+
+```{r}
+favorite_jlg <- tribble(
+  ~place,~long,~lat,~favorite,
+  "Macalester College", -93.1712321, 44.9378965, "no",
+  "Himalayan Restaurant", -93.228861346592,44.9487386762116, "no",
+  "Wet Paint", -93.17183206138824,44.94005820915364, "no",
+  "Workhorse Coffee Bar", -93.19803105266367,44.964523401565636, "yes",
+  "Legal Rights Center", -93.26464080371544,44.96678907025196, "no",
+  "Mu Mu Tea", -93.22322723731754,  44.97339252564114, "no",
+  "Neighborhood Cafe", -93.16634598837405, 44.94674956251351, "no",
+  "Saint Paul Public Library", -93.09720837673058,44.94410764959125, "no",
+  "Corazon Minneapolis", -93.20252005534763, 44.95216505048076,"no",
+  "Minneapolis Institute of Art", -93.27118460343647,44.96285466604572, "yes",
+  "Trader Joes", -93.14724380880986,44.92842595672699, "no",
+  "Mercado Central", -93.25271401142653, 44.94850752415724, "yes",
+  "Minnesota State Capitol", -93.10371077521422,44.95637601133649, "no",
+  "Boneshaker Books", -93.23963930371569, 44.96273209958878,"no"
+)
+```
+
+```{r}
+library(gplots)
+library(leaflet)
+
+#| fig-cap: "Leaflet Map of Joey Gebin's favorite places."
+#| fig-alt: "Leaflet Map of Joey Gebin's favorite places. Includes distinction for her top 3 favorite places. The map spans the Twin Cities in Minnesota, and includes cafes, bookstores, resaturants, and other locations."
+leaflet(data = favorite_jlg) |> 
+  addTiles() |> 
+  addCircleMarkers(color = ~colorFactor(c("#0F712F","#CC6677"), domain = favorite_jlg$favorite)(favorite), label = favorite_jlg$place) %>% 
+  addLegend(position = "bottomright",
+            colors = c("#0F712F","#CC6677"), labels = c("Honorable Mentions","Favorite Places"), title ="Legend")
+```
+
