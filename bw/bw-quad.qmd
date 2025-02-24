@@ -3,3 +3,21 @@ title: "Quadvariate Viz"
 ---
 
 Use this file to generate a professional looking **quadvariate** visualization.  The visualization will not perfect the first time but you are expected to improve on it throughout the semester especially after covering advanced topics such as effective viz.
+
+```{r}
+# Create dataset
+data(bechdel)
+new_bechdel <- bechdel |>
+  mutate(clean_test = factor(clean_test, c("nowomen", "notalk", "men", "dubious", "ok"))) |>
+  mutate(half_decades = cut(year, breaks = seq(1969, 2014, by = 5)))
+```
+
+```{r}
+#| fig-cap: "Bar chart showing Bechdel Test results for films in 5-year periods."
+#| fig-alt: "Bar chart showing Bechdel Test results for films in 5-year periods. The data ranges from 1970 to 2013. The amount of films that pass the Bechdel test has overall increased, however in the last 5 years there has been a slight decrease is passes. Ok is the most prevelant category followed by No talk, meaning women didn't speak in the film. "
+ggplot(new_bechdel, aes(cut(x = year,9), fill = clean_test)) + 
+  geom_bar(position = "fill", binwidth = 5) +
+  scale_fill_manual(values = c("#882255","#44AA99","#CC6677","#DDCC77","#88CCEE")) +
+  labs(title = "Bechdel Film Test Results Every Five Years", x = "5-Year Period", y = "Proportion") 
+```
+
