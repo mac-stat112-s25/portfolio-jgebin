@@ -1,0 +1,169 @@
+---
+title: "ica-reshaping"
+format: html
+---
+
+```{r}
+# Loading packages
+library(tidyverse)
+```
+
+
+### Exercise 1: What’s the problem?
+
+```{r}
+sleep_wide <- read.csv("https://mac-stat.github.io/data/sleep_wide.csv")
+
+head(sleep_wide)
+```
+## Part a
+What are the unit observations in sleep_wide?
+
+- Reaction time to stimulus after x days of only getting 3 hours of sleep.
+
+## Part b 
+Suppose I ask you to plot each subject’s reaction time (y-axis) vs the number of days of sleep restriction (x-axis). “Sketch” out in words what the first few rows of the data need to look like in order to do this. It might help to think about what you’d need to complete the plotting frame:
+
+- You need another colum called days
+
+## Part c
+How can you obtain the dataset you sketched in part b?
+- Pivot Longer
+
+### Exercise 2: Pivot longer
+## Part a
+```{r}
+# For cols, try 2 appproaches: using - and starts_with
+sleep_wide |>
+  pivot_longer(cols = - Subject, names_to = "day", values_to = "reaction time", names_prefix = "day")
+
+sleep_wide |>
+  pivot_longer(cols = starts_with("day_"), names_to = "day", values_to = "reaction time", names_prefix = "day")
+```
+
+## Part b 
+```{r}
+sleep_long <- sleep_wide |>
+  pivot_longer(cols = -Subject,
+               names_to = "day",
+               names_prefix = "day_",
+               values_to = "reaction_time")
+
+head(sleep_long)
+```
+Follow up: 
+
+It removed the underscore from day values.
+
+## Part c
+Using sleep_long, construct a line plot of reaction time vs day for each subject. This will look goofy no matter what you do. Why? HINT: look back at head(sleep_long). What class or type of variables are Subject and day? What do we want them to be?
+
+```{r}
+ggplot(sleep_long, aes(x = day, y = reaction_time, color = Subject)) + 
+  geom_line()
+```
+### Exercise 3: Changing variable classes & plotting
+
+```{r}
+sleep_long <- sleep_wide |>
+  pivot_longer(cols = -Subject,
+               names_to = "day",
+               names_prefix = "day_",
+               values_to = "reaction_time") |> 
+  mutate(Subject = as.factor(Subject), day = as.numeric(day))
+
+# Check it out
+# Same data, different class
+head(sleep_long)
+```
+
+## Part a 
+```{r}
+# Make a line plot of reaction time by day for each subject
+# Put these all on the same frame
+ggplot(sleep_long, aes(x = day, y = reaction_time, color = Subject)) + 
+  geom_line()
+```
+```{r}
+# Make a line plot of reaction time by day for each subject
+# Put these all on separate frames (one per subject)
+ggplot(sleep_long, aes(x = day, y = reaction_time)) + 
+         facet_wrap(~Subject)+
+         geom_line()
+```
+## Part c
+Reaction time goes up, taking longer to react to stimulus, after more days of only getting 3 hours of sleep. This is generally true but happens at different rates for different subjects.
+
+### Exercise 4: Pivot wider
+## Part a
+```{r}
+sleep_long |>
+  pivot_wider(names_from = day, values_from = reaction_time) |>
+  head()
+```
+## Part b
+```{r}
+sleep_long |>
+  pivot_wider(names_from = day, values_from = reaction_time, names_prefix = "day_") |>
+  head()
+```
+### Exercise 5: Practice with Billboard charts
+
+```{r}
+# Load data
+library(tidyr)
+data("billboard")
+
+# Check it out
+head(billboard)
+```
+## Part a 
+Construct and summarize a plot of how a song’s Billboard ranking its 2nd week on the chart (y-axis) is related to its ranking the 1st week on the charts (x-axis). Add a reference line geom_abline(intercept = 0, slope = 1). Songs above this line improved their rankings from the 1st to 2nd week.
+
+```{r}
+ggplot(billboard, aes(x= wk1, y = wk2)) +
+  geom_point() +
+  geom_abline(intercept = 0, slope = 1)
+```
+
+## Part b
+Use your wrangling tools to identify which songs are those above the line in Part a, i.e. with rankgings that went up from week 1 to week 2.
+```{r}
+billboard |>
+  filter(wk2 > wk1) |>
+  select(track)
+```
+
+## Part c
+```{r}
+# Define nov_1999
+nov_1999 <- billboard |>
+  filter(date.entered == "1999-11-6") |>
+  select(- c(date.entered, track))
+
+# Confirm that nov_1999 has 2 rows (songs) and 77 columns
+nov_1999
+```
+## Part d
+Create and discuss a visualization of the rankings (y-axis) over time (x-axis) for the 2 songs in nov_1999. There are hints below (if you scroll), but you’re encouraged to play around and use as few hints as possible.
+
+```{r}
+nov_1999 |>
+  pivot_longer(cols = starts_with("wk"), names_to = "week", values_to = "ranking", names_prefix = "wk") |>
+  mutate(week = as.numeric(week)) |>
+  ggplot(aes(x= week, y = ranking, color = artist)) + 
+  geom_line()
+```
+
+### Exercise 6: Practice with the Daily Show
+```{r}
+library(fivethirtyeight)
+data("daily_show_guests")
+daily <- daily_show_guests
+```
+## Part a 
+```{r}
+daily_show_guests |>
+  group_by()
+```
+
