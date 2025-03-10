@@ -6,7 +6,12 @@ Use this file to generate a professional looking **quadvariate** visualization. 
 
 ```{r}
 # Create dataset
+library(mosaic)
+library(mosaicData)
+library(fivethirtyeight)
+
 data(bechdel)
+
 new_bechdel <- bechdel |>
   mutate(clean_test = factor(clean_test, c("nowomen", "notalk", "men", "dubious", "ok"))) |>
   mutate(half_decades = cut(year, breaks = seq(1969, 2014, by = 5)))
