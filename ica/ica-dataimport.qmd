@@ -1,0 +1,62 @@
+---
+title: "ica-dataimport"
+format: html
+---
+
+### Exercise 1
+Downloaded imdb csv
+
+### Exercise 2: Import Data into RStudio
+## Part a
+```{r}
+library(tidyverse)
+
+imdb_messy <- read_csv("~/GitHub/portfolio-jgebin/data/imdb_5000_messy.csv")
+
+```
+## Part b
+```{r}
+# This should be the folder where you stored this qmd!
+getwd()
+```
+## Part c
+```{r}
+imdb_temp <- read_csv("../data/imdb_5000_messy.csv")
+```
+### Exercise 3: Check Data
+## Part a
+Open imdb_messy in the spreadsheet-like viewer by typing View(imdb_messy) in the console. Sort this “spreadsheet” by different variables by clicking on the arrows next to the variable names. Do you notice anything unexpected?
+
+## Part b
+```{r}
+imdb_messy |>
+  mutate(across(where(is.character), as.factor)) |>  # convert characters to factors in order to summarize
+  summary()
+```
+
+### Exercise 4: Clean Data: Factor Variables 1
+
+- What’s goofy about this / what do we need to fix?
+There are 6 categories but there should only be 3. Since they are formatted differently there are two black and white categories and 3 color categories. 
+
+- More specifically, what different categories does the color variable take, and how many movies fall into each of these categories?
+The color variable takes 3 categories: color (30), Color (4,755), and COLOR(30) with a total of 4,815 movies between all three.
+
+### Exercise 5: Clean Data: Factor Variables 2
+## Part a
+We could open the .csv file in, say, Excel or Google sheets, clean up the color variable, save a clean copy, and then reimport that into RStudio. BUT that would be the wrong thing to do. Why is it important to use R code, which we then save inside this qmd, to clean our data?
+
+- This would be the wrong thing to do because it would mess up the import of data we performed earlier. By using R code, you can do this without all the extra steps. 
+## Part b
+Let’s use R code to change the color variable so that it appropriately combines the various categories into only 2: Color and Black_White. We’ve learned a couple sets of string-related tools that could be handy here. First, starting with the imdb_messy data, change the color variable using one of the functions we learned in the Factors lesson.
+
+fct_relevel(), fct_recode(), fct_reorder()
+
+Store your results in imdb_temp (don’t overwrite imdb_messy). To check your work, print out a count() table of the color variable in imdb_temp.
+```{r}
+#imdb_messy |>
+ # mutate(Colors = fct_reorder(color,
+                        #     "Color" = "color",
+                         #    "COLOR" = "color"))
+```
+
