@@ -54,9 +54,95 @@ fct_relevel(), fct_recode(), fct_reorder()
 
 Store your results in imdb_temp (don’t overwrite imdb_messy). To check your work, print out a count() table of the color variable in imdb_temp.
 ```{r}
-#imdb_messy |>
- # mutate(Colors = fct_reorder(color,
-                        #     "Color" = "color",
-                         #    "COLOR" = "color"))
+library(dplyr)
+library(forcats)
+imdb_temp <- imdb_messy |>
+  mutate(Colors = fct_recode(color,
+                             "Color" = "color",      
+                             "Color" = "COLOR",    
+                             "Black and White" = "B&W")) 
+
+count(imdb_temp, Colors)
+```
+## Part c
+Repeat Part b using one of our string functions from the String lesson:
+
+```{r}
+imdb_temp <- imdb_messy %>%
+  mutate(Colors = color %>%
+           str_replace("color", "Color") %>%
+           str_replace("COLOR", "Color") %>%
+           str_replace("B&W", "Black and White"))
+
+count(imdb_temp, Colors)
+```
+
+### Exercise 6: Clean Data: Missing Data 1
+## Part a
+```{r}
+#Count the total number of rows in imdb_messy
+count(imdb_messy)
+
+# Then count the number of NAs in each column
+colSums(is.na(imdb_messy))
+
+# Then count the number of NAs in a specific column
+imdb_messy |>
+count(sum(is.na(actor_1_facebook_likes)))
+```
+## Part b
+As a second step, let’s think about why some values are missing. Study the individual observations with NAs carefully. Why do you think they are missing? Are certain films more likely to have more NAs than others?
+
+- Maybe they are movies that have not been released to the public yet since NAs are often in year of release and gross revenue.
+
+## Part c
+Consider a more specific example. Obtain a dataset of movies that are missing data on actor_1_facebook_likes. Then explain why you think there are NAs. HINT: is.na(___)
+
+```{r}
+missing_data_movies <- imdb_messy |>
+  filter(is.na(actor_1_facebook_likes))|>
+  select(movie_title, actor_1_facebook_likes)
+
+head(missing_data_movies)
+```
+- This might be because the actors have not been announced yet.
+
+### Exercise 7: Clean Data: Missing Data 2
+## Part a
+Calculate the average duration of a film. THINK: How can we deal with the NA’s?
+```{r}
+average_duration <- mean(imdb_messy$duration, na.rm = TRUE)
+
+average_duration
+```
+## Part b
+```{r}
+imdb_temp <- drop_na(imdb_messy)
+
+head(imdb_temp)
+```
+Follow-up questions:
+
+What did drop_na() do? How many data points are left?
+
+- This dropped any rows with NAs in them reducing the data set from 5043 to 3756 observations.
+In what situations might this function be a good idea?
+
+- This might be good if you are just trying to make a visualization broadly.
+In what situations might this function be a bad idea?
+
+- It might be a bad idea if you want to get rid of some NAs but not all of them as it deletes the whole observation.
+
+## Part c
+```{r}
+ggplot(imdb_messy, aes(x = duration, fill = color)) +
+  geom_density()
+```
+```{r}
+imdb_temp <- imdb_messy |>
+  mutate(complete_data = !is.na(duration) & !is.na(color))|>
+  select(movie_title, complete_data, duration, color)
+
+head(imdb_temp)
 ```
 
