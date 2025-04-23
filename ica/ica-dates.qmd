@@ -212,6 +212,6 @@ head(daily_births)
 ```
 
 ```{r}
-ggplot(daily_births, aes(x))
+
 ```
 

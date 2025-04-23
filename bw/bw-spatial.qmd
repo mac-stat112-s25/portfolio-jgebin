@@ -5,6 +5,10 @@ title: "Spatial Viz"
 Use this file to generate a professional looking **spatial** visualization.  The visualization will not perfect the first time but you are expected to improve on it throughout the semester especially after covering advanced topics such as effective viz.
 
 ```{r}
+#Load Packages
+library(leaflet)
+library(tidyverse)
+
 favorite_jlg <- tribble(
   ~place,~long,~lat,~favorite,
   "Macalester College", -93.1712321, 44.9378965, "no",
