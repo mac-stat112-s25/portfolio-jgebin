@@ -1,7 +1,16 @@
 ---
-title: "ica-dates"
-format: html
+title: "Dates"
+number-sections: true
+execute: 
+  warning: false
+fig-height: 2.75
+fig-width: 4.25
+fig-env: 'figure'
+fig-pos: 'h'
+fig-align: center
+code-fold: false
 ---
+
 ```{r}
 library(tidyverse)
 penguins <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-07-28/penguins.csv')

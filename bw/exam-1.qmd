@@ -1,0 +1,96 @@
+---
+title: "Exam 1"
+format: html
+---
+
+### Background
+
+## 1.2 Grand Research Question 
+
+**What does the consumption of each food category in each country look like?**
+
+### 2. Install Packages
+
+### 3. Load Packages
+```{r}
+library(tidytuesdayR)
+library(tidyverse)
+```
+
+There are 9 packages loaded when loading the *tidyverse* package
+
+### 4. Get Data
+```{r}
+tuesdata <- tt_load('2020-02-18')
+fc <- tuesdata$food_consumption
+```
+
+### 5. Understand Data
+```{r}
+# Look at first 6 rows
+head(fc)
+
+# Find dimension of data set
+dim(fc)
+
+# Look at names of columns 
+names(fc)
+
+```
+### 6. Explore Data
+## 6.3 Observations
+
+- What are the units of observations? 
+Country and food_catefory
+
+- How many food categories are there?
+11
+
+- How many countries are there?
+130
+
+### 7. Understand Variables Individually 
+
+- How many variables does the grand research question involve?
+3
+
+### 8. Understand Consumption 
+
+List appropriate plot for each bivariate viz and what should go into their aesthetic details
+
+- Overall Food Consumption/ Food Category
+Density Plot + Faceted
+
+- Overall Food Consumption/ Country
+Density Plot + Faceted
+
+```{r}
+#| fig-height: 22
+#| fig-width: 11
+ggplot(fc, aes(x = consumption, fill = food_category)) +
+  geom_density()
+```
+
+### 9. Answering the Grand RQ
+
+- Which of these plots is the most appropriate one? Why?
+The map will be most clear for showing dif. food categories consumption by country
+
+### 10. Beyond Viz
+## 10.1 Effectiveness
+List a minimum of **five** concepts that you should apply to your final viz to make it more effective?
+
+1. Axis labels
+2. Caption
+3. Alt-text
+4. Color-blind friendly color palette
+5. Title
+6. Legend title
+
+## 10.2 Additional Questions
+List **two** additional questions, new or follow-up that you would like to answer based on this dataset?
+
+1. How consumption of dif. food categories correlates to CO2 emmission?
+2. How does geographic location affect consumption of food types? 
+
+### Finalize Work

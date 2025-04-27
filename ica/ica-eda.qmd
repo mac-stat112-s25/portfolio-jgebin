@@ -1,0 +1,93 @@
+---
+title: "EDA"
+number-sections: true
+execute: 
+  warning: false
+fig-height: 2.75
+fig-width: 4.25
+fig-env: 'figure'
+fig-pos: 'h'
+fig-align: center
+code-fold: false
+---
+
+
+
+::: {.callout-caution title="Learning Goals"}
+
+-   Understand the first steps that should be taken when you encounter a new data set
+-   Develop comfort in knowing how to explore data to understand it
+-   Develop comfort in formulating research questions
+
+:::
+
+
+
+::: {.callout-note title="Additional Resources"}
+For more information about the topics covered in this chapter, refer to the resources below:
+
+-   [Exploratory Data Analysis (html)](https://r4ds.hadley.nz/eda) by Wickham, Çetinkaya-Rundel, & Grolemund
+-   [Exploratory Data Analysis Checklist (html)](https://bookdown.org/rdpeng/exdata/exploratory-data-analysis-checklist.html) by Peng
+- [R Packages to do EDA (html)](https://m-clark.github.io/posts/2020-07-10-eda/) blog post by Michael Clark
+:::
+
+
+## Review
+
+
+**WHERE ARE WE?!? Starting a data project**
+
+This final, short unit will help prepare us as we launch into course projects. In order to even *start* these projects, we need some sense of the following:
+
+1.  data import: how to find data, store data, load data into RStudio, and do some preliminary data checks & cleaning
+
+2.  exploratory data analysis (EDA)
+
+
+## EDA
+
+### What is EDA?! {-}
+
+EDA is a preliminary, exploratory, and iterative analysis of our data relative to our general research questions of interest.
+
+![](https://mac-stat.github.io/images/112/eda.png)
+
+
+
+### Differece from Before {-}
+
+How is this different than what we’ve been doing?  We've been focusing on various tools needed for various steps *within* an EDA. Now we'll bring them all together in a more cohesive *process*.
+
+
+
+### Example {-}
+
+In his book Exploratory Data Analysis with R, Dr. Roger D. Peng included an [EDA case study about Changes in Fine Particle Air Pollution in the U.S.](https://bookdown.org/rdpeng/exdata/data-analysis-case-study-changes-in-fine-particle-air-pollution-in-the-u-s-.html).  Note that the link to the datasets used by Peng in the chapter is currently broken.  Can you figure out the new location?^[It might have been moved to https://aqs.epa.gov/aqsweb/airdata/download_files.html]
+
+
+### EDA Essentials {-}
+
+-   Start small.\
+    We often start with lots of data -- some of it useful, some of it not. To start:
+
+    -   Focus on just a small set of variables of interest.
+    -   Break down your research question into smaller pieces.
+    -   Obtain the most simple numerical & visual summaries that are relevant to your research questions.
+
+-   Ask questions.\
+    We typically start a data analysis with at least some general research questions in mind. In obtaining numerical and graphical summaries that provide insight into these questions, we must ask:
+
+    -   what questions *do* these summaries answer?
+    -   what questions *don't* these summaries answer?
+    -   what's surprising or interesting here?
+    -   what *follow-up* questions do these summaries provoke?
+
+-   Play! Be creative. Don't lock yourself into a rigid idea of what should happen.
+
+-   Repeat.\
+    Repeat this iterative questioning and analysis process as necessary, letting our reflections on the previous questions inspire our next steps.
+
+
+## Exercises
+
+Work on Homework 7

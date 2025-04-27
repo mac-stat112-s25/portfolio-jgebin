@@ -1,7 +1,16 @@
 ---
-title: "ica-dataimport"
-format: html
+title: "Data Import"
+number-sections: true
+execute: 
+  warning: false
+fig-height: 2.75
+fig-width: 4.25
+fig-env: 'figure'
+fig-pos: 'h'
+fig-align: center
+code-fold: false
 ---
+
 
 ### Exercise 1
 Downloaded imdb csv
@@ -146,3 +155,143 @@ imdb_temp <- imdb_messy |>
 head(imdb_temp)
 ```
 
+### Exercise 3: Check Data {.unnumbered}
+
+#### Part b {.unnumbered}
+
+There are many NA's, the `color` variable is goofy...
+
+```{r}
+imdb_messy |>
+  mutate(across(where(is.character), as.factor)) |>  # convert characters to factors in order to summarize
+  summary()
+```
+
+
+
+### Exercise 4: Clean Data: Factor Variables 1 {.unnumbered}
+
+```{r}
+imdb_messy |> 
+  count(color)
+```
+
+
+
+### Exercise 5: Clean Data: Factor Variables 2 {.unnumbered}
+
+#### Part a {.unnumbered}
+
+That wouldn't be **reproducible**. It's important to log all steps in our data cleaning, so that we and others know and could reproduce those steps.
+
+#### Part b {.unnumbered}
+
+```{r}
+imdb_temp <- imdb_messy |> 
+  mutate(color = fct_recode(color,
+                            "Color" = "COLOR",
+                            "Color" = "color",
+                            "Black_White" = "B&W",
+                            "Black_White" = "Black and White"))
+
+imdb_temp |> 
+  count(color)
+```
+
+#### Part c {.unnumbered}
+
+```{r}
+imdb_temp <- imdb_messy |> 
+  mutate(color = str_replace(color, "COLOR", "Color"),
+         color = str_replace(color, "color", "Color"),
+         color = str_replace(color, "B&W", "Black_White"),
+         color = str_replace(color, "Black and White", "Black_White"))
+
+imdb_temp |> 
+  count(color)
+```
+
+
+
+### Exercise 6: Clean Data: Missing Data 1 {.unnumbered}
+
+#### Part a {.unnumbered}
+
+```{r}
+# Count the total number of rows in imdb_messy
+nrow(imdb_messy)
+
+# Then count the number of NAs in each column
+colSums(is.na(imdb_messy))
+```
+
+#### Part c {.unnumbered}
+
+These are all documentaries that don't have any actors.
+
+```{r}
+imdb_messy |> 
+  filter(is.na(actor_1_facebook_likes))
+```
+
+
+
+### Exercise 7: Clean: Missing Data 2 {.unnumbered}
+
+#### Part a {.unnumbered}
+
+```{r}
+imdb_messy |> 
+  summarize(mean(duration, na.rm = TRUE))
+```
+
+Follow-up:
+
+We just remove the NAs from the calculation. No need to entirely remove the related movies from the dataset.
+
+#### Part b {.unnumbered}
+
+This gets rid of any movie with any NAs. There are only 3756 movies left! This approach is heavy-handed. It's typically only a good idea when we need complete info on every variable for every part of our analysis.
+
+```{r}
+imdb_temp <- drop_na(imdb_messy)
+nrow(imdb_temp)
+colSums(is.na(imdb_temp))
+```
+
+#### Part c {.unnumbered}
+
+```{r}
+ggplot(imdb_messy, aes(x = duration, fill = color)) +
+  geom_density()
+```
+
+We keep most of the movies!
+
+```{r}
+# Approach 1
+imdb_temp <- imdb_messy |> 
+  select(duration, color) |> 
+  drop_na()
+dim(imdb_temp)
+
+# Approach 2
+imdb_temp <- imdb_messy |> 
+  filter(!is.na(duration), !is.na(color))
+dim(imdb_temp)
+
+# Plot
+ggplot(imdb_temp, aes(x = duration, fill = color)) +
+  geom_density()
+```
+
+#### Part d {.unnumbered}
+
+```{r}
+imdb_temp <- imdb_messy |> 
+  mutate(actor_1_facebook_likes =
+         replace_na(actor_1_facebook_likes, 0))
+
+imdb_temp |> 
+  summarize(sum(is.na(actor_1_facebook_likes)))
+```

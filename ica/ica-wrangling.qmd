@@ -1,7 +1,16 @@
 ---
-title: "ica-wrangling"
-format: html
+title: "Wrangling"
+number-sections: true
+execute: 
+  warning: false
+fig-height: 2.75
+fig-width: 4.25
+fig-env: 'figure'
+fig-pos: 'h'
+fig-align: center
+code-fold: false
 ---
+
 
 ```{r}
 # Load tidyverse & data

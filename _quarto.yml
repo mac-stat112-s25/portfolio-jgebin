@@ -30,6 +30,13 @@ book:
       - bw/bw-tri.qmd
       - bw/bw-quad.qmd
       - bw/bw-spatial.qmd
+      - bw/exam-1.qmd
+      - bw/exam-2.qmd
+    
+    - part: "Summary Sheets"
+      chapters: 
+      - ss/visualization.qmd
+      - ss/wrangling.qmd
 
     - part: "In-class Activities"
       chapters: 
@@ -42,6 +49,9 @@ book:
       - ica/ica-dates.qmd
       - ica/ica-reshaping.qmd
       - ica/ica-factors.qmd
+      - ica/ica-strings.qmd
+      - ica/ica-dataimport.qmd
+      - ica/ica-eda.qmd
 
 format:
   html:
