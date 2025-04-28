@@ -1,5 +1,11 @@
 ---
-title: "visualization"
+title: "Visualization"
 format: html
 ---
+
+
+```{r, out.width="70%", include=TRUE, fig.align="center", fig.cap=c("Visualization One-pager"), echo=FALSE}
+
+knitr::include_graphics("C:/Users/jogeb/OneDrive/Documents/GitHub/portfolio-jgebin/ss/examtwo.pdf")
+```
 
