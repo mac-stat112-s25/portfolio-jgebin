@@ -1,5 +1,57 @@
 ---
-title: "exam-2"
+title: "Exam 2"
 format: html
 ---
+
+### 2. Background
+
+## 2.2 Load Packages
+```{r}
+library(tidytuesdayR)
+library(tidyverse)
+library(rnaturalearth)
+library(sf)
+```
+
+## 2.3 Load Data
+```{r}
+tuesdata <- tt_load('2020-02-18')
+fc <- tuesdata$food_consumption
+```
+## 2.4 Inspect Data
+```{r}
+str(fc)
+```
+```{r}
+head(fc)
+```
+
+## 2.5 Inspect country Variable 
+
+## 2.6 Inspect food_category Variable
+
+```{r}
+fc |>
+  distinct(food_category)
+```
+The problem with these values is that some of the categories overlap, like eggs and poultry and that the names are long.
+
+## 2.7 Fix food_category Variable
+```{r}
+fcc <- fc|>
+  mutate(food_category = str_replace(food_category, "Lamb & Goat", "Lamb"))|>
+  mutate(food_category = str_replace(food_category, "Milk - inc. cheese", "Dairy")) |>
+  mutate(food_category = str_replace(food_category, "Wheat and Wheat Products", "Wheat")) |>
+  mutate(food_category = str_replace(food_category, "Nuts inc. Peanut Butter", "Nuts"))
+```
+
+
+## 2.8 Re-inspect food_category Variable
+
+```{r}
+fcc |>
+  distinct(food_category)
+```
+
+### 3. Most Consuming Countries
 

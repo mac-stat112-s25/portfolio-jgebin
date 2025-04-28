@@ -1,5 +1,109 @@
 ---
-title: "solo-project"
+title: "Solo Project"
 format: html
 ---
 
+### Background Info 
+
+The numbat, also known as the noombat or walpurti, is an insectivorous marsupial. It is diurnal and its diet consists almost exclusively of termites. The species was once widespread across southern Australia, but is now restricted to several small colonies in Western Australia.
+
+![](https://animalcorner.org/wp-content/uploads/2022/02/The-Numbat.png)
+
+### Research Question
+**Where do you find Numbats in Australia?**
+
+## General 
+
+```{r}
+# Read data
+
+numbats <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2023/2023-03-07/numbats.csv')
+
+```
+```{r}
+# Zip File 
+
+# Load the necessary library
+library(utils)
+library(tidyverse)
+
+# Specify the path to the Zip file
+zip_file <- "C:/Users/jogeb/OneDrive/Documents/GitHub/portfolio-jgebin/zip file australia.zip"
+
+# Extract files from the Zip archive
+unzip(zip_file, exdir = "C:/Users/jogeb/OneDrive/Documents/GitHub/portfolio-jgebin/bw/unzip shp")
+```
+
+```{r}
+# Read Shapefile 
+
+library(sf)
+library(ggplot2)
+
+australia_shp <- read_sf("C:/Users/jogeb/OneDrive/Documents/GitHub/portfolio-jgebin/bw/unzip shp/STE_2016_AUST.shp")
+```
+
+### Solo Project
+## Project Set Up
+
+```{r}
+# Simple Map
+
+ggplot() +
+  geom_sf(data = australia_shp) 
+```
+
+```{r}
+# Explore Data
+head(numbats)
+
+```
+
+```{r}
+# Map Trial
+ggplot(data = australia_shp) +
+  geom_sf() +
+  xlab("Longitude") + ylab("Latitude") 
+```
+```{r}
+# Remove rows with missing lat/lon
+numbats_clean <- na.omit(numbats[, c("decimalLongitude", "decimalLatitude")])
+numbats <- numbats[rownames(numbats_clean), ]
+
+# Convert to sf
+numbats_sf <- st_as_sf(numbats_clean, coords = c("decimalLongitude", "decimalLatitude"), crs = 4326)
+
+#Plot the Numbats
+plot(numbats_sf$geometry)
+```
+```{r}
+# Check CRS 
+st_crs(australia_shp)$epsg
+
+st_crs(numbats_sf)$epsg
+```
+```{r}
+#Transform CRS
+#australia_shp.crs <- st_transform(australia_shp, crs = 26918)
+#numbats_sf.crs <- st_transform(numbats_sf, crs = 26918)
+```
+
+## Mapping
+
+```{r}
+#| fig-cap: "Sf Map of Australia with Spottings of Numbats"
+#| fig-alt: "Map of Numbat spottings in Australia. High concentration in Southwest Australia, near city of Perth. A few spottings in South Australia. No spottings in Northern Territoy and Queensland. "
+
+ggplot() +
+  #Add Virginia polygon
+  geom_sf(data = australia_shp) +
+  #Add cities layer
+  geom_sf(data = numbats_sf, color = "Brown", alpha = .3, size = 3) +
+  #Add titles
+  labs(x = "Longitude", y = "Latitude", title = "Numbats in Australia") +
+  #Add theme
+  theme_bw()
+```
+
+## Conclusion
+Numbats are primarily found and spotted in Southwestern Australia near Perth. There are some spottings of Numbats in Southern Australia, Victoria, and New South Wales. There are no Numbat spottings about 25*S. 
