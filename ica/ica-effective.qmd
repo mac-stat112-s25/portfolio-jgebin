@@ -13,7 +13,7 @@ code-fold: false
 
 ### Exercise 1: Professionalism
 
-```{r}
+```{r, message = FALSE}
 # Load tidyverse package for plotting and wrangling
 library(tidyverse)
 

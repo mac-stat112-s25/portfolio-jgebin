@@ -11,7 +11,7 @@ fig-align: center
 code-fold: false
 ---
 
-```{r}
+```{r, message = FALSE}
 library(tidyverse)
 penguins <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-07-28/penguins.csv')
 

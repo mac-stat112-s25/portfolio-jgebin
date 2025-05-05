@@ -32,6 +32,7 @@ book:
       - bw/bw-spatial.qmd
       - bw/exam-1.qmd
       - bw/exam-2.qmd
+      - bw/solo-project.qmd
     
     - part: "Summary Sheets"
       chapters: 

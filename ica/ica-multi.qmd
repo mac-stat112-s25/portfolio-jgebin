@@ -5,7 +5,7 @@ title: "Mulivariate Viz"
 Use this file for practice with the **mulivariate viz** in-class activity.  Refer to the class website for details.
 
 # 5.1 Notes
-```{r}
+```{r, message = FALSE}
 library(tidyverse)
 
 # Import data

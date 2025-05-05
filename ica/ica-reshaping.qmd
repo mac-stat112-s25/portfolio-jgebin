@@ -12,7 +12,7 @@ code-fold: false
 ---
 
 
-```{r}
+```{r, message = FALSE}
 # Loading packages
 library(tidyverse)
 ```
@@ -165,7 +165,7 @@ nov_1999 |>
 ```
 
 ### Exercise 6: Practice with the Daily Show
-```{r}
+```{r, message = FALSE}
 library(fivethirtyeight)
 data("daily_show_guests")
 daily <- daily_show_guests

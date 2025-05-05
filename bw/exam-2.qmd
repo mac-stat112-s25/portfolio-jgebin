@@ -6,7 +6,7 @@ format: html
 ### 2. Background
 
 ## 2.2 Load Packages
-```{r}
+```{r, message = FALSE}
 library(tidytuesdayR)
 library(tidyverse)
 library(rnaturalearth)
@@ -54,4 +54,63 @@ fcc |>
 ```
 
 ### 3. Most Consuming Countries
+# Research Question 1
+
+Which 5 countries consume the most food? 
+
+## 3.1 Expected Shape 
+
+## 3.2 Steps 
+
+1. Select Country and Consumption 
+2. Group by Country 
+3. Arrange by Consumption
+4. Filter top 5
+
+```{r}
+fcc |>
+  select(country, consumption) |>
+  group_by(country)|>
+  arrange(desc(consumption)) |>
+  filter(consumption > 303.71 )
+```
+
+
+## 3.3 Viz
+
+```{r}
+fcc |>
+  select(country, consumption) |>
+  group_by(country)|>
+  arrange(desc(consumption)) |>
+  filter(consumption > 303.71 )|>
+  ggplot(aes(x = country, y = consumption)) +
+  geom_point()
+```
+
+### Most Consuming Countries of Each Food
+# Research Question 2
+
+Which top 5 countries consume each food are? 
+
+## 4.1 Expected Shape 
+## 4.2 Steps
+
+1. Select Country, Consumption, and Food Category
+2. Group by Country and Food Category
+```{r}
+fcc |>
+  select(food_category,country, consumption)|>
+  group_by(food_category, country)
+```
+
+
+## 4.3 Viz
+```{r}
+#fcc |>
+ # select(food_category,country, consumption)|>
+ # group_by(food_category, country) |>
+ # ggplot(aes(x = consumption, fill = country)) +
+  #geom_density()
+```
 

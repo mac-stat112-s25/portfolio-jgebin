@@ -14,7 +14,7 @@ head(fave_places)
 ```
 
 ## Part a
-```{r}
+```{r, message = FALSE}
 # Load the leaflet package
 library(leaflet)
 library(tidyverse)

@@ -14,7 +14,7 @@ code-fold: false
 
 ### 12.3 Exercises
 
-```{r}
+```{r, message = FALSE}
 library(tidyverse)
 
 # Loading Datasets! 

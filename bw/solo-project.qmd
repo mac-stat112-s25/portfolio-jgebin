@@ -14,13 +14,14 @@ The numbat, also known as the noombat or walpurti, is an insectivorous marsupial
 
 ## General 
 
-```{r}
+```{r, message = FALSE}
 # Read data
 
 numbats <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2023/2023-03-07/numbats.csv')
 
 ```
-```{r}
+
+```{r, message = FALSE}
 # Zip File 
 
 # Load the necessary library

@@ -13,7 +13,7 @@ code-fold: false
 
 
 #### 11.6 Exercises
-```{r}
+```{r, message = FALSE}
 library(tidyverse)
 ```
 

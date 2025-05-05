@@ -17,7 +17,7 @@ Downloaded imdb csv
 
 ### Exercise 2: Import Data into RStudio
 ## Part a
-```{r}
+```{r, message = FALSE}
 library(tidyverse)
 
 imdb_messy <- read_csv("~/GitHub/portfolio-jgebin/data/imdb_5000_messy.csv")
@@ -29,7 +29,7 @@ imdb_messy <- read_csv("~/GitHub/portfolio-jgebin/data/imdb_5000_messy.csv")
 getwd()
 ```
 ## Part c
-```{r}
+```{r, message = FALSE}
 imdb_temp <- read_csv("../data/imdb_5000_messy.csv")
 ```
 ### Exercise 3: Check Data

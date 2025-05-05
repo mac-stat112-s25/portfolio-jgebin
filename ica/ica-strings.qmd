@@ -10,7 +10,7 @@ fig-pos: 'h'
 fig-align: center
 code-fold: false
 ---
-```{r}
+```{r, message = FALSE}
 library(tidyverse)
 
 classes <- data.frame(

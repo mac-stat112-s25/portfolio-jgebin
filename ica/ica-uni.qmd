@@ -14,7 +14,7 @@ head(hikes)
 ```
 
 # Exercise 2: Load tidyverse
-```{r}
+```{r, message = FALSE}
 # Load the package
 library(tidyverse)
 ```

@@ -26,7 +26,7 @@ The variables in the survey are cafe_mac, minutes_to_campus, fave_temp, and hang
 
 ## EXAMPLE 1: Hangout Preferences {-}
 
-```{r}
+```{r, message = FALSE}
 # Attach a package needed to use the ggplot functions
 library(tidyverse)
 ```
